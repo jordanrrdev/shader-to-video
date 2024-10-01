@@ -1,0 +1,16 @@
+[requires]
+opengl/system
+glfw/3.4
+glad/0.1.36
+ffmpeg/7.0.1
+
+[options]
+glad/0.1.36:gl_profile=core
+glad/0.1.36:gl_version=4.6
+
+[generators]
+CMakeDeps
+CMakeToolchain
+
+[layout]
+cmake_layout
