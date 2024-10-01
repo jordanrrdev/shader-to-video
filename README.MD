@@ -20,3 +20,6 @@ Set CMake preset and build preset
 Test the installation by executing `build\build\Release\ShaderToVideo.exe` or `build/build/Release/ShaderToVideo`.
 
 After following the steps above, you can also install the CMake extension on Visual Studio Code and start building and executing from there.
+
+## License
+[Shader to Video](https://github.com/jordanrrdev/shader-to-video) © 2024 by [Jordan Rodrigues Rangel](https://jordanrr.dev/) is licensed under [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1).
