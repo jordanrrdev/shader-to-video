@@ -5,12 +5,19 @@
 
 #include <GLFW/glfw3.h>
 
+struct WindowSize {
+  int width;
+  int height;
+};
+
 class Window {
 public:
   Window();
   ~Window();
 
-  void StartDrawLoop(const std::function<void(void)>&) const;
+  void StartDrawLoop(const std::function<void(void)>& draw) const;
+
+  WindowSize GetSize() const;
 
 private:
   GLFWwindow *glfwWindow;

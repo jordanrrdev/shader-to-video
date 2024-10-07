@@ -12,6 +12,8 @@ public:
 
   void Use() const;
 
+  GLint GetUniformLocation(const char* variableName) const;
+
 private:
   GLuint id;
 };

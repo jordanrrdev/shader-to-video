@@ -48,6 +48,12 @@ void Window::StartDrawLoop(const std::function<void(void)>& draw) const {
   }
 }
 
+WindowSize Window::GetSize() const {
+  int width, height;
+  glfwGetWindowSize(this->glfwWindow, &width, &height);
+  return WindowSize{ width, height };
+}
+
 void framebuffer_size_callback(GLFWwindow *window, int width, int height) {
   glViewport(0, 0, width, height);
 }

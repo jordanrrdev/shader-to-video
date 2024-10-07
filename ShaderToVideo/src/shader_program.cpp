@@ -33,3 +33,7 @@ ShaderProgram::~ShaderProgram() {
 void ShaderProgram::Use() const {
   glUseProgram(this->id);
 }
+
+GLint ShaderProgram::GetUniformLocation(const char* variableName) const {
+  return glGetUniformLocation(this->id, variableName);
+}

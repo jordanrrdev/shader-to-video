@@ -9,6 +9,8 @@
 
 #include "window.h"
 
+class ShaderProgram;
+
 class ShaderToVideo {
 public:
   ShaderToVideo();
@@ -19,6 +21,8 @@ private:
   std::unique_ptr<Window> window;
 
   void InitGLAD() const;
+
+  void SetupUniforms(const ShaderProgram& shaderProgram, unsigned frame) const;
 };
 
 #endif

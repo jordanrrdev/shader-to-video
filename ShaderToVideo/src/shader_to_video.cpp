@@ -34,11 +34,17 @@ void ShaderToVideo::StartDrawLoop(const char *fragmentShaderBodyCode) {
   std::string fragmentShaderHeaderCode {R"(
     #version 460 core
     out vec4 fragColor;
+
+    uniform float iTime;
+    uniform uint iFrame;
+    uniform vec2 iResolution;
+
+    vec2 fragCoord = gl_FragCoord.xy;
   )"};
 
-  const char *fragmentShaderCode = (
-    fragmentShaderHeaderCode + fragmentShaderBodyCode
-  ).c_str();
+  fragmentShaderHeaderCode += fragmentShaderBodyCode;
+
+  const char *fragmentShaderCode{ fragmentShaderHeaderCode.c_str() };
 
   Shader fragmentShader{ GL_FRAGMENT_SHADER, fragmentShaderCode };
 
@@ -46,10 +52,14 @@ void ShaderToVideo::StartDrawLoop(const char *fragmentShaderBodyCode) {
   
   ScreenQuad screenQuad;
 
+  unsigned frame{ 0 };
+
   this->window->StartDrawLoop([&]() {
     // Clear framebuffer
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
+
+    SetupUniforms(shaderProgram, frame);
 
     // Draw screen quad
     shaderProgram.Use();
@@ -62,5 +72,25 @@ void ShaderToVideo::InitGLAD() const {
     std::cout << "Failed to initialize GLAD" << std::endl;
     glfwTerminate();
     exit(-1);
+  }
+}
+
+void ShaderToVideo::SetupUniforms(const ShaderProgram& shaderProgram, unsigned frame) const {
+  shaderProgram.Use();
+
+  auto timeLocation{ shaderProgram.GetUniformLocation("iTime") };
+  glUniform1f(timeLocation, float(glfwGetTime()));
+
+  auto frameLocation{ shaderProgram.GetUniformLocation("iFrame") };
+  glUniform1ui(frameLocation, frame);
+
+  static bool isStaticUniformsSetup{ false };
+
+  if (!isStaticUniformsSetup) {
+    isStaticUniformsSetup = true;
+
+    auto resolutionLocation{ shaderProgram.GetUniformLocation("iResolution") };
+    auto [width, height]{ this->window->GetSize() };
+    glUniform2f(resolutionLocation, float(width), float(height));
   }
 }
